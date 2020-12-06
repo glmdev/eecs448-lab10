@@ -1,0 +1,26 @@
+<?php
+
+require './configuration.php';
+
+$page = new common\Page;
+$users = new app\UserRepository;
+
+// Generate the user options
+$user_options = array_map(function($user) {
+    return '<option value="' . $user['user_id'] . '">' . $user['username'] . '</option>';
+}, $users->find());
+
+$page->title('EECS 448 Lab 10 - Exercise 6')
+    ->header('View Posts by User')
+    ->form(system_url('ViewUserPosts.php'), function() use($page, $user_options) {
+        $page->writes('
+            <label for="user-select">Select a user:</label>
+            <select name="user_id" id="user-select" style="min-width: 300px;" required>
+                ' . implode("\n", $user_options) . '
+            </select>
+        ');
+
+        $page->submit();
+    });
+
+$page->write();

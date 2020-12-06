@@ -1,0 +1,16 @@
+<?php
+
+require_once './configuration.php';
+
+$page = new common\Page;
+
+$page->title('Exercise 3 - EECS 448 Lab 10')
+    ->header('Create a New Post')
+    ->div(function() use($page) {
+        $page->form(system_url('CreatePosts.php'), function() use($page) {
+            $page->writes('<input type="text" name="username" placeholder="Username" required/>')->line_break();
+            $page->writes('<textarea name="content" placeholder="Post content" required></textarea>')->line_break();
+            $page->submit();
+        });
+    })
+    ->write();

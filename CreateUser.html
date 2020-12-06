@@ -1,0 +1,14 @@
+<?php
+
+require_once './configuration.php';
+
+$page = new common\Page();
+
+$page->title('Exercise 2 - EECS 448 Lab 10')
+    ->header('Create a New User')
+    ->form(system_url('CreateUser.php'), function() use($page) {
+        $page->writes('<input type="text" placeholder="Username" name="username" required/>');
+        $page->submit();
+    });
+
+$page->write();

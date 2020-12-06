@@ -1,0 +1,17 @@
+<?php
+
+require './configuration.php';
+
+$page = new common\Page;
+
+$page->title('EECS 448 Lab 10 - Exercise 4')
+    ->header('Admin Home')
+    ->writes("
+        <ul>
+            <li><a href=\"" . system_url('ViewUsers.php') . "\">View Users</a></li>
+            <li><a href=\"" . system_url('ViewUserPosts.html') . "\">View Posts by User</a></li>
+            <li><a href=\"" . system_url('DeletePost.html') . "\">Delete Posts</a></li>
+        </ul>
+    ");
+
+$page->write();

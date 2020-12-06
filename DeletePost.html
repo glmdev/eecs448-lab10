@@ -1,0 +1,41 @@
+<?php
+
+require './configuration.php';
+
+$db = new common\database\Connection;
+$db->connect();
+
+$page = new common\Page;
+
+$page->title('EECS 448 Lab 10 - Exercise 7')
+    ->header('Delete Posts');
+
+$query = "SELECT post.post_id, user.username, post.content
+            FROM posts post
+            LEFT JOIN users user
+                ON user.user_id = post.post_id";
+                
+$results = $db->fetch($query);
+
+$post_display = array_merge([
+    ['Post ID', 'Username', 'Content', 'Delete?'],
+], array_map(function($post) {
+    $id = 'post-' . $post['post_id'];
+
+    return [
+        $post['post_id'],
+        $post['username'],
+        $post['content'],
+        '<input type="checkbox" id="' . $id . '" name="' . $id . '" value="yes">
+         <label for="' . $id . '">Delete</label>'
+    ];
+}, $results));
+
+$page->writes('<p>Select the posts you want to delete.')
+    ->form(system_url('DeletePost.php'), function() use($page, $post_display) {
+        $page->table($post_display)
+            ->writes('<br>')
+            ->submit();
+    });
+
+$page->write();
